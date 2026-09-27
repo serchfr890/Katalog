@@ -11,6 +11,7 @@ import SwiftData
 struct AppContainer {
     private let modelContainer: ModelContainer
     private let productRepository: ProductRepository
+    let networkMonitor: NetworkMonitor
 
     init() {
         do {
@@ -20,6 +21,7 @@ struct AppContainer {
         }
         let localDataSource = ProductLocalDataSourceImpl(modelContainer: modelContainer)
         productRepository = ProductRepositoryImpl(localDataSource: localDataSource)
+        networkMonitor = NetworkMonitor()
     }
 
     func makeProductListViewModel() -> ProductListViewModel {

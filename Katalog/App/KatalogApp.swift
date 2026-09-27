@@ -14,6 +14,7 @@ struct KatalogApp: App {
     var body: some Scene {
         WindowGroup {
             ProductListView(viewModel: container.makeProductListViewModel())
+                .offlineBanner(isConnected: container.networkMonitor.isConnected)
         }
     }
 }
