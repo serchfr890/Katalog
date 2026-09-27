@@ -21,7 +21,7 @@ final class ProductListViewModel {
     }
 
     func load() async {
-        isLoading = true
+        isLoading = products.isEmpty
         errorMessage = nil
         do {
             products = try await fetchProductsUseCase.execute()
@@ -29,5 +29,17 @@ final class ProductListViewModel {
             errorMessage = "No se pudieron cargar los productos."
         }
         isLoading = false
+        await refresh()
+    }
+
+    private func refresh() async {
+        do {
+            products = try await fetchProductsUseCase.refresh()
+            errorMessage = nil
+        } catch {
+            if products.isEmpty {
+                errorMessage = "No se pudieron cargar los productos."
+            }
+        }
     }
 }

@@ -6,9 +6,21 @@
 //
 
 import Foundation
+import SwiftData
 
 struct AppContainer {
-    private let productRepository: ProductRepository = ProductRepositoryImpl()
+    private let modelContainer: ModelContainer
+    private let productRepository: ProductRepository
+
+    init() {
+        do {
+            modelContainer = try ModelContainer(for: ProductEntity.self)
+        } catch {
+            fatalError("No se pudo inicializar el ModelContainer: \(error)")
+        }
+        let localDataSource = ProductLocalDataSourceImpl(modelContainer: modelContainer)
+        productRepository = ProductRepositoryImpl(localDataSource: localDataSource)
+    }
 
     func makeProductListViewModel() -> ProductListViewModel {
         ProductListViewModel(

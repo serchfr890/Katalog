@@ -1,6 +1,6 @@
 import Foundation
 
-struct Product: Codable, Identifiable, Hashable {
+nonisolated struct Product: Codable, Identifiable, Hashable, Sendable {
     let id: Int
     let title: String
     let description: String
@@ -25,13 +25,13 @@ struct Product: Codable, Identifiable, Hashable {
     let thumbnail: String
 }
 
-struct Dimensions: Codable, Hashable {
+nonisolated struct Dimensions: Codable, Hashable, Sendable {
     let width: Double
     let height: Double
     let depth: Double
 }
 
-struct Review: Codable, Hashable {
+nonisolated struct Review: Codable, Hashable, Sendable {
     let rating: Int
     let comment: String
     let date: Date
@@ -39,7 +39,7 @@ struct Review: Codable, Hashable {
     let reviewerEmail: String
 }
 
-struct Meta: Codable, Hashable {
+nonisolated struct Meta: Codable, Hashable, Sendable {
     let createdAt: Date
     let updatedAt: Date
     let barcode: String

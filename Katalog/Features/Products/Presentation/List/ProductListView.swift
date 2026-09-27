@@ -5,6 +5,7 @@
 //  Created by Sergio Flores Ramírez on 27/09/26.
 //
 
+import SwiftData
 import SwiftUI
 
 struct ProductListView: View {
@@ -45,10 +46,24 @@ struct ProductListView: View {
     }
 }
 
-#Preview {
-    ProductListView(
-        viewModel: ProductListViewModel(
-            fetchProductsUseCase: FetchProductsUseCaseImpl(repository: ProductRepositoryImpl())
+private func makePreviewViewModel() -> ProductListViewModel {
+    let modelContainer: ModelContainer
+    do {
+        modelContainer = try ModelContainer(
+            for: ProductEntity.self,
+            configurations: ModelConfiguration(isStoredInMemoryOnly: true)
+        )
+    } catch {
+        fatalError("No se pudo inicializar el ModelContainer de preview: \(error)")
+    }
+    let localDataSource = ProductLocalDataSourceImpl(modelContainer: modelContainer)
+    return ProductListViewModel(
+        fetchProductsUseCase: FetchProductsUseCaseImpl(
+            repository: ProductRepositoryImpl(localDataSource: localDataSource)
         )
     )
+}
+
+#Preview {
+    ProductListView(viewModel: makePreviewViewModel())
 }
