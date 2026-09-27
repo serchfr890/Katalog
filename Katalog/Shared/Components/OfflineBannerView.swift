@@ -9,13 +9,18 @@ import SwiftUI
 
 struct OfflineBannerView: View {
     var body: some View {
-        Text("Modo sin Conexión")
-            .font(.footnote)
-            .fontWeight(.medium)
-            .foregroundStyle(.white)
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 6)
-            .background(Color.orange.opacity(0.9))
+        HStack(spacing: 6) {
+            Image(systemName: "wifi.slash")
+                .symbolEffect(.pulse)
+            Text("Offline Mode")
+                .fontWeight(.medium)
+        }
+        .font(.footnote)
+        .foregroundStyle(.white)
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 6)
+        .background(Color(.systemOrange).gradient)
+        .background(.ultraThinMaterial)
     }
 }
 
