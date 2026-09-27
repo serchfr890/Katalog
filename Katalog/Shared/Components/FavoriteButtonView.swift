@@ -16,7 +16,7 @@ struct FavoriteButtonView: View {
             store.toggle(productId)
         } label: {
             Image(systemName: store.isFavorite(productId) ? "heart.fill" : "heart")
-                .foregroundStyle(store.isFavorite(productId) ? .red : .secondary)
+                .foregroundStyle(.red)
         }
         .buttonStyle(.plain)
     }

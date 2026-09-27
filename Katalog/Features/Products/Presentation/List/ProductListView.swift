@@ -17,10 +17,19 @@ struct ProductListView: View {
         self.favoritesStore = favoritesStore
     }
 
+    private let gridColumns = [GridItem(.flexible()), GridItem(.flexible())]
+
     var body: some View {
         NavigationStack {
             content
-                .navigationTitle("Productos")
+                .navigationTitle("Browse catalog")
+                .searchable(
+                    text: $viewModel.searchText,
+                    placement: .navigationBarDrawer(displayMode: .always)
+                )
+                .navigationDestination(for: Product.self) { product in
+                    ProductDetailView(product: product)
+                }
                 .task {
                     await viewModel.load()
                 }
@@ -29,24 +38,29 @@ struct ProductListView: View {
 
     @ViewBuilder
     private var content: some View {
-        if viewModel.isLoading {
-            ProgressView()
+        if viewModel.isLoading && viewModel.products.isEmpty {
+            ScrollView {
+                LazyVGrid(columns: gridColumns, spacing: 16) {
+                    ForEach(0..<6, id: \.self) { _ in
+                        ProductCardSkeletonView()
+                    }
+                }
+                .padding(.horizontal)
+            }
         } else if let errorMessage = viewModel.errorMessage {
             Text(errorMessage)
                 .foregroundStyle(.secondary)
         } else {
-            List(viewModel.products) { product in
-                HStack {
-                    VStack(alignment: .leading) {
-                        Text(product.title)
-                            .font(.headline)
-                        Text(product.brand ?? product.category)
-                            .font(.subheadline)
-                            .foregroundStyle(.secondary)
+            ScrollView {
+                LazyVGrid(columns: gridColumns, spacing: 16) {
+                    ForEach(viewModel.filteredProducts) { product in
+                        NavigationLink(value: product) {
+                            ProductCardView(product: product, favoritesStore: favoritesStore)
+                        }
+                        .buttonStyle(.plain)
                     }
-                    Spacer()
-                    FavoriteButtonView(productId: product.id, store: favoritesStore)
                 }
+                .padding(.horizontal)
             }
         }
     }

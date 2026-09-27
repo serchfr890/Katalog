@@ -13,8 +13,14 @@ final class ProductListViewModel {
     private(set) var products: [Product] = []
     private(set) var isLoading = false
     private(set) var errorMessage: String?
-
     private let fetchProductsUseCase: FetchProductsUseCase
+
+    var searchText: String = ""
+
+    var filteredProducts: [Product] {
+        guard !searchText.isEmpty else { return products }
+        return products.filter { $0.title.localizedCaseInsensitiveContains(searchText) }
+    }
 
     init(fetchProductsUseCase: FetchProductsUseCase) {
         self.fetchProductsUseCase = fetchProductsUseCase
