@@ -99,6 +99,9 @@
 			);
 			buildRules = (
 			);
+			dependencies = (
+				49489B533069A8E50002D77E /* PBXTargetDependency */,
+			);
 			fileSystemSynchronizedGroups = (
 				49FC98EC3068EF50007FC061 /* Katalog */,
 			);
@@ -181,6 +184,9 @@
 			);
 			mainGroup = 49FC98E13068EF50007FC061;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				49489B513069A8BA0002D77E /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 49FC98EB3068EF50007FC061 /* Products */;
 			projectDirPath = "";
@@ -230,6 +236,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		49489B533069A8E50002D77E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 49489B523069A8E50002D77E /* SwiftLintBuildToolPlugin */;
+		};
 		49FC98FB3068EF52007FC061 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 49FC98E93068EF50007FC061 /* Katalog */;
@@ -372,6 +382,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Katalog;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -418,6 +429,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Katalog;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -589,6 +601,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		49489B513069A8BA0002D77E /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SimplyDanny/SwiftLintPlugins";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.65.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		49489B523069A8E50002D77E /* SwiftLintBuildToolPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 49489B513069A8BA0002D77E /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */;
+			productName = "plugin:SwiftLintBuildToolPlugin";
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 49FC98E23068EF50007FC061 /* Project object */;
 	validationLevel = 1;
