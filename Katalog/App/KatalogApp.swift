@@ -13,8 +13,14 @@ struct KatalogApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ProductListView(viewModel: container.makeProductListViewModel())
-                .offlineBanner(isConnected: container.networkMonitor.isConnected)
+            ProductListView(
+                viewModel: container.makeProductListViewModel(),
+                favoritesStore: container.favoritesStore
+            )
+            .offlineBanner(isConnected: container.networkMonitor.isConnected)
+            .task {
+                await container.favoritesStore.load()
+            }
         }
     }
 }

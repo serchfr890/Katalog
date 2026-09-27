@@ -10,9 +10,11 @@ import SwiftUI
 
 struct ProductListView: View {
     @State private var viewModel: ProductListViewModel
+    let favoritesStore: FavoritesStore
 
-    init(viewModel: ProductListViewModel) {
+    init(viewModel: ProductListViewModel, favoritesStore: FavoritesStore) {
         _viewModel = State(initialValue: viewModel)
+        self.favoritesStore = favoritesStore
     }
 
     var body: some View {
@@ -34,12 +36,16 @@ struct ProductListView: View {
                 .foregroundStyle(.secondary)
         } else {
             List(viewModel.products) { product in
-                VStack(alignment: .leading) {
-                    Text(product.title)
-                        .font(.headline)
-                    Text(product.brand ?? product.category)
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text(product.title)
+                            .font(.headline)
+                        Text(product.brand ?? product.category)
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                    }
+                    Spacer()
+                    FavoriteButtonView(productId: product.id, store: favoritesStore)
                 }
             }
         }
@@ -64,6 +70,20 @@ private func makePreviewViewModel() -> ProductListViewModel {
     )
 }
 
+private func makePreviewFavoritesStore() -> FavoritesStore {
+    let modelContainer: ModelContainer
+    do {
+        modelContainer = try ModelContainer(
+            for: FavoriteEntity.self,
+            configurations: ModelConfiguration(isStoredInMemoryOnly: true)
+        )
+    } catch {
+        fatalError("No se pudo inicializar el ModelContainer de preview: \(error)")
+    }
+    let localDataSource = FavoritesLocalDataSourceImpl(modelContainer: modelContainer)
+    return FavoritesStore(repository: FavoritesRepositoryImpl(localDataSource: localDataSource))
+}
+
 #Preview {
-    ProductListView(viewModel: makePreviewViewModel())
+    ProductListView(viewModel: makePreviewViewModel(), favoritesStore: makePreviewFavoritesStore())
 }
