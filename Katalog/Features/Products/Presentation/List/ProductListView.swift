@@ -28,7 +28,7 @@ struct ProductListView: View {
                     placement: .navigationBarDrawer(displayMode: .always)
                 )
                 .navigationDestination(for: Product.self) { product in
-                    ProductDetailView(product: product)
+                    ProductDetailView(product: product, favoritesStore: favoritesStore)
                 }
                 .task {
                     await viewModel.load()
